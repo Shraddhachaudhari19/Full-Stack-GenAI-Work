@@ -1,0 +1,32 @@
+Class-14-10-May-2026-All￾Paper-Link
+Encoder and decoder 2014: https://arxiv.org/abs/1409.3215
+Encoder and decoder with attention: https://arxiv.org/pdf/1409.0473
+ULMFIT: https://arxiv.org/abs/1801.06146
+Transformer: https://arxiv.org/pdf/1706.03762
+Bert: https://arxiv.org/pdf/1810.04805
+Bert from Huggingface:
+https://huggingface.co/docs/transformers/model_doc/bert
+Deberta: https://arxiv.org/pdf/2006.03654
+Distilbert: https://arxiv.org/pdf/1910.01108
+Roberta: https://arxiv.org/pdf/1907.11692
+BART: https://arxiv.org/pdf/1910.13461
+T5: https://arxiv.org/abs/1910.10683
+GPT-3: https://arxiv.org/pdf/2005.14165
+GPT-2: https://arxiv.org/pdf/2404.01786
+GPT-1: https://arxiv.org/pdf/2305.10435
+CLIP Research Paper: https://arxiv.org/abs/2103.00020
+Vit Research Paper: https://arxiv.org/pdf/2010.11929
+SLM Research Paper: https://arxiv.org/pdf/2506.02153v2
+A comprehensive survey on the application of transformers:
+https://arxiv.org/pdf/2306.07303
+DALL-E(Text to Image): https://arxiv.org/pdf/2102.12092
+Whisper(Audio-to-Text): https://arxiv.org/pdf/2212.04356
+Speech-Transformer: https://arxiv.org/pdf/2303.11607
+Class-14-10-May-2026-All-Paper-Link 1
+LLM Leader Board: https://artificialanalysis.ai/leaderboards/models
+LLM Leader Board: https://huggingface.co/spaces/lmarena-ai/arena-leaderboard
+LangChain API all providers:
+https://docs.langchain.com/oss/javascript/integrations/providers/all_providers
+Langchain Docs: https://docs.langchain.com/
+Hugging Face: https://huggingface.co/
+Class-14-10-May-2026-All-Paper-Link 2

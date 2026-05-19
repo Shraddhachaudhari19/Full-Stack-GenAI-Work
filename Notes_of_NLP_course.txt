@@ -1,0 +1,690 @@
+Reserch paper websites-
+1.paperswithcode.com
+https://paperswithcode.co/
+2.arxiv
+  press 'ctrl' + '+''+'
+
+#winget install uv
+#uv python install 3.12
+
+#uv python pin 3.4  
+pin selects python that you want to use
+
+#uv init
+#uv sync
+#uv add numpy
+#uv remove numpy
+
+#.venv\Scripts\activate
+
+#uv run python hello_world.py
+#python hello_world.py
+
+
+
+⚔️ 2. pip vs uv vs conda (INTERVIEW IMPORTANT)
+👉 pip
+Default tool
+Easy to use
+Slower 😅
+Only installs packages
+
+👉 Example:
+
+pip install numpy
+👉 uv
+Very fast ⚡
+Modern tool
+Handles env + packages
+Replacement of pip + virtualenv
+
+👉 Example:
+
+uv pip install numpy
+👉 Anaconda / Conda
+Heavy tool 🧱
+Used in Data Science
+Manages Python + packages + environments
+
+👉 Example:
+
+conda install numpy
+🧠 Simple comparison table
+Feature	pip	uv	conda
+Speed	Slow	Fast ⚡	Medium
+Easy	Yes	Yes	Medium
+Env support	No (needs venv)	Yes ✔️	Yes ✔️
+Best for	Beginners	Modern devs	Data science
+🏆 Final advice (very important)
+
+👉 For YOU:
+
+✔️ Use uv + venv
+👉 Best for coding + learning AI
+
+❌ Avoid conda (for now)
+👉 It can confuse beginners
+
+
+
+
+
+
+
+
+
+
+
+
+GenAi
+
+pytorch
+huggingface
+unsloth
+langchain
+llamaindex
+langraph
+data parsing vectordatabases cloud
+OpenAi SDK
+gurdrails
+MCP
+
+
+
+uv python install 3.11
+uv venv venv --python 3.11
+venv\Scripts\activate
+
+
+Encoding techniques
+
+One Hot Encoding
+BOW 
+TFIDF                           BM25 based on TFIDF (Ranking based method)
+
+                                      Glove vector
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------ The Ultimate uv Master Guide (2026)--------------------------------------------------------
+
+uv is an extremely fast Python package and project manager. It replaces pip , pip-tools , venv , and pyenv
+in a single, Rust-based binary.
+🛠 Step 1: Robust Installation
+We prioritize the Standalone Script because it is self-contained and manages its own updates.
+A. Windows (10/11) - The Robust Way
+Open PowerShell as Administrator and run:
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+B. Windows Alternative (WinGet)
+If you prefer a package manager:
+winget install --id astral-sh.uv -e
+⚠️ If WinGet is missing: Most modern Windows systems have it. If not, install the "App Installer" from the
+Microsoft Store, or run: Add-AppxPackage -RegisterByFamilyName -MainPackage
+Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
+C. macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+📄 Step 2: Understanding the "Brain" of your Project
+Before running commands, you must understand the two files that uv creates. This is where most people get
+confused.
+1. pyproject.toml (The Manifest): This is where YOU write. You list your dependencies here (e.g.,
+pandas , scikit-learn ). It defines the intent of your project.
+2. uv.lock (The Truth): This is where UV writes. It contains the exact version and "hash" of every single
+package and sub-dependency. It ensures that if you share this project, your colleague gets the exact same
+environment down to the last byte.
+🏗 Step 3: Project Setup Sequence
+Follow this exact order to migrate a project or start a new one.
+1. Initialize & Pin
+uv init # Creates the pyproject.toml scaffold
+uv python pin 3.12 # "Pinning" locks the project to a specific Python version
+What is uv python pin ? It tells uv never to guess which Python to use. It writes the version into a .python￾version file so everyone on the team uses the same engine.
+2. Migration (From old Pip)
+If you are moving from an old project:
+uv pip freeze > requirements.txt # Capture current state
+uv add -r requirements.txt # Migrates them into pyproject.toml
+3. The "Sync" Magic
+uv sync
+What is uv sync ? This is the most important command. It looks at your pyproject.toml , calculates the
+uv.lock , and then creates/updates the .venv to match them perfectly. If you manually delete a folder in
+.venv , uv sync will bring it back.
+🔍 Step 4: Command Deep Dive
+Command What it actually does
+uv add <pkg> Adds the package to pyproject.toml and immediately updates your .venv.
+uv lock Updates the uv.lock file without changing your installed packages.
+uv run <file.py>
+Runs the script using the project's environment without needing to run source
+activate.
+uv venv --python
+3.11
+Creates a virtual environment using a specific version (it downloads the version for you
+if missing).
+📓 Step 5: Jupyter & VS Code Navigation
+For Data Scientists, the biggest hurdle is getting the Notebook to "see" the environment.
+The Robust Kernel Setup
+1. Install tools: uv add ipykernel
+2. Register:
+uv run python -m ipykernel install --user --name="my-env" --display-name="Python (UV￾Project)"
+3. Confirm: jupyter kernelspec list (This ensures the system knows where the kernel lives).
+VS Code Navigation
+1. Open your .ipynb .
+2. Top Right: Click "Select Kernel".
+3. Selection: Choose "Python Environments" -> Look for the one marked with your project name or
+./.venv .
+4. If it doesn't appear: Press Ctrl+Shift+P -> Developer: Reload Window . This forced refresh is often
+required to pick up new uv paths.
+⚡ Step 6: FAQ & Web Error Resolutions
+❓ Issue: "uv: command not found" after installation.
+Resolution: Your PATH wasn't updated.
+Windows: Look in %USERPROFILE%\.local\bin . Copy that path. Search "Env" in Start Menu -> Edit
+System Environment Variables -> Path -> Add the copied path.
+Mac/Linux: Add export PATH="$HOME/.local/bin:$PATH" to your ~/.zshrc .
+❓ Issue: SSL/Certificate Errors during download.
+Resolution: Often happens in corporate environments (like Cognizant/Apple). Force uv to use system certificates:
+set UV_NATIVE_TLS=true (Windows)
+export UV_NATIVE_TLS=true (Mac/Linux)
+❓ Issue: Kernel keeps "Detecting" or "Connecting" forever.
+Resolution: This is usually a broken ipykernel installation within the .venv .
+1. uv pip install --force-reinstall ipykernel
+2. uv run python -m ensurepip --upgrade
+3. Restart VS Code completely.
+❓ Issue: How do I handle a "Project within a Project"?
+Resolution: If you have a repo with multiple folders, uv might get confused. Ensure you run uv init in the Root
+and use uv add from there. If you need sub-project environments, use uv venv <name> inside the specific subfolder.
+❓ Issue: How to clear the cache when things get weird?
+Resolution: uv caches everything to stay fast. If you suspect a corrupt package:
+uv cache clean
+
+
+
+
+
+
+
+
+--------------------------------Class-01-Intro-GenAI-LLMs------------------------
+🔹 Check UV installed
+uv --version
+🔹 Install UV (if not installed)
+pip install uv
+🔹 Initialize Project
+uv init
+🔹 Check Installed Packages
+uv pip list
+🔹 Check Available Python Versions
+uv python list
+🔹 Create Virtual Environment
+Specific version:
+uv venv env --python cpython-3.12.18-windows-x86_64-none
+Class-01-Intro-GenAI-LLMs 1
+Generic:
+uv venv <your-env-name> --python <your-python-version>
+🔹 Install Packages
+Single package:
+uv add <package_name>
+uv pip install <package_name>
+From requirements file:
+uv add -r requirements.txt
+uv pip install -r requirements.txt
+LLM / GenAI Development Tools & Frameworks
+LLM Foundations
+Huggingface
+PyTorch
+Finetuning
+Unsloth
+LLaMA Factory
+Huggingface
+Vector Databases & Search (RAG Backbone)
+FAISS
+Chroma
+Qdrant
+Supabase
+Class-01-Intro-GenAI-LLMs 2
+pgvector
+Milvus
+Pinecone
+AWS OpenSearch
+Azure AI Search
+Databases & Storage
+Neo4j
+MongoDB
+PostgreSQL
+Redis
+SQL Alchemy
+LLM Application Building Framework
+LangChain
+Llama Index
+Haystack
+Lang Smith
+Guardrails, Validation & Safety
+Guardrails.ai
+Nvidia Nemo
+OpenAI Guardrail
+Local LLMs & Runtime
+Ollama
+Experiment Tracking
+MLflow
+Data Modelling
+Pydantic
+Class-01-Intro-GenAI-LLMs 3
+MCP
+FastMCP
+Document AI & Parsing
+Llama Parser
+Docling
+Google Document AI
+Amazon Textract
+python-docx
+PyMuPDF
+pdfplumber
+Parsio
+Unstructured.io
+Azure Document Intelligence
+Agentic AI Frameworks
+Lang Graph
+Deepagent
+AutoGen
+n8n
+Cloud GenAI Platforms
+Google ADK
+Agent Core
+AWS Bedrock
+Azure Cloud Foundry
+GCP Vertex AI
+Evaluation & Observability
+RAGAS
+Class-01-Intro-GenAI-LLMs 4
+TruLens
+Llama Index Eval
+DeepEval
+OpenAI Evals
+Prompt Engineering & Prompt Management
+LangChain Prompt Hub
+PromptLayer
+OpenAI Cookbook / Prompt Examples
+PromptHub (Community-driven repos)
+DSPy (Prompt-as-Code approach)
+Guidance (Microsoft)
+Deployment, Infrastructure & CI/CD
+ECS + Fargate + EC2
+AWS SageMaker
+GitHub Actions
+Azure Virtual Machines (VMs)
+Azure Kubernetes Service (AKS)
+Azure Container Apps / ACI
+Testing
+pytest
+Pipeline Orchestration
+Apache Airflow
+Class-01-Intro-GenAIs
+
+
+
+
+
+
+
+-------------------------------Class-03-Embedding-Encoding-----------------------
+imp note: use python 3.11 for this practical
+use only cpython interpreter
+uv python list
+uv python install <give the specific version of the python>
+uv venv env —python <mention python version>
+command for installting the requirement file: uv pip install -r requirements.txt
+https://huggingface.co/spaces/mteb/leaderboard
+https://www.sbert.net/
+https://huggingface.co/models?library=sentence-transformers
+
+
+
+
+
+
+
+
+
+ 4 April
+Day 5
+One Hot Encoding
+----------------------------What is OneHotEncoder?----------------
+
+👉 It is a class from scikit-learn (sklearn)
+
+👉 It converts categorical data (words, labels) into numbers (0 and 1)
+
+🔹 Import
+from sklearn.preprocessing import OneHotEncoder
+🔹 Basic Example
+data = [['red'], ['blue'], ['green']]
+
+encoder = OneHotEncoder(sparse_output=False)
+encoded = encoder.fit_transform(data)
+
+print(encoded)
+✅ Output:
+[
+ [0,0,1],   # red
+ [1,0,0],   # blue
+ [0,1,0]    # green
+]
+🔹 Important Methods
+1. fit()
+encoder.fit(data)
+
+👉 Learns all unique values (vocabulary)
+
+2. transform()
+encoder.transform([['red']])
+
+👉 Converts to vector
+
+3. fit_transform()
+encoder.fit_transform(data)
+
+👉 Shortcut (fit + transform)
+
+4. categories_
+encoder.categories_
+
+👉 Shows all unique values:
+
+[array(['blue', 'green', 'red'], dtype=object)]
+🔹 Why 2D input?
+[['red'], ['blue']] ✅
+['red', 'blue'] ❌
+
+👉 Because sklearn expects:
+👉 rows = samples, columns = features
+
+🔹 In your NLP case
+all_words = [['people'], ['watch'], ['movie'], ...]
+
+👉 Each word = one sample
+👉 Encoder learns vocabulary
+👉 Converts each word → vector
+
+
+----------------------------------------
+🔹 Your code:
+all_words = [[word] for sentence in tokens for word in sentence]
+
+from sklearn.preprocessing import OneHotEncoder
+encoder = OneHotEncoder(sparse_output=False)
+
+encoder.fit(all_words)
+
+print("Vocabulary:", encoder.categories_[0])
+🔹 Step 1: What is all_words?
+all_words = [[word] for sentence in tokens for word in sentence]
+
+👉 Output:
+
+[
+ ['people'], ['watch'], ['movie'],
+ ['people'], ['watch'], ['cricket'],
+ ['people'], ['like'], ['movie'],
+ ['people'], ['like'], ['cricket']
+]
+
+👉 Important:
+
+Each word is inside a list → ['people']
+Because OneHotEncoder expects 2D input
+🔹 Step 2: What is OneHotEncoder?
+
+👉 It converts words → binary vectors (0 & 1)
+
+Example:
+
+people → [0,0,0,1,0]
+movie  → [0,0,1,0,0]
+🔹 Step 3: What does fit() do?
+encoder.fit(all_words)
+
+👉 It learns all unique words (vocabulary)
+
+🔹 Step 4: This line
+print(encoder.categories_[0])
+
+👉 Output:
+
+['cricket', 'like', 'movie', 'people', 'watch']
+
+👉 This is same as:
+✔ Vocabulary
+✔ Unique words
+
+🧠 Simple Meaning:
+
+👉 fit() = “learn all possible words”
+
+🔹 Step 5: How encoding works
+
+If you do:
+
+encoder.transform([['movie']])
+
+👉 Output:
+
+[[0, 0, 1, 0, 0]]
+🔹 Full mapping:
+Word	Vector
+cricket	[1,0,0,0,0]
+like	[0,1,0,0,0]
+movie	[0,0,1,0,0]
+people	[0,0,0,1,0]
+watch	[0,0,0,0,1]
+💡 Why use One-Hot Encoding?
+
+👉 ML models don’t understand text
+👉 So we convert words → numbers
+------------------------------------------
+code Explnation 
+🔹 1. AIM (your line)
+
+Convert Data → Number
+
+👉 Correct 👍
+👉 Machines cannot understand text, so we convert text → numbers.
+
+🔹 2. What is Bag of Words (BOW)?
+
+👉 It counts how many times each word appears in a sentence.
+
+👉 It ignores grammar and order ❌
+👉 Only focuses on word frequency ✅
+
+🔹 3. Your Code
+from sklearn.feature_extraction.text import CountVectorizer
+
+bow = CountVectorizer()
+bow_matrix = bow.fit_transform(document)
+🔹 Step 1: CountVectorizer()
+
+👉 From scikit-learn
+
+👉 It:
+
+Finds all unique words
+Converts sentence → numbers
+🔹 Step 2: fit_transform(document)
+
+👉 Two things happen:
+
+✅ fit()
+
+Learns vocabulary (all words)
+
+✅ transform()
+
+Converts sentence → numbers
+
+🔹 4. Your sentence
+document = ["divesh is a good mentor he teaches us very well he teaches the project"]
+🔹 Vocabulary (all words)
+bow.get_feature_names_out()
+
+👉 Example output:
+
+['a', 'divesh', 'good', 'he', 'is', 'mentor', 'project', 'teaches', 'the', 'us', 'well']
+🔹 BOW Output
+bow_matrix.toarray()
+
+👉 Output:
+
+[[1 1 2 1 1 1 2 1 1 1 1]]
+🧠 How to understand this?
+
+Each number = count of word
+
+Word	Count
+a	1
+divesh	1
+good	1
+he	2
+teaches	2
+...	...
+
+👉 So vector = word counts
+
+🔹 5. Important Problem in Your Code ⚠️
+
+You did:
+
+bow.fit(document)
+bow.get_feature_names_out()
+
+Then:
+
+bow.fit(documents)
+
+👉 ❌ Problem:
+You changed vocabulary
+
+🧠 Important Rule:
+
+👉 Always:
+
+fit → once
+transform → many times
+🔹 6. Multiple Documents Example
+documents = [
+ "people watch movie and watch movie again",
+ "people watch cricket and watch cricket",
+ "people like movie and like movie a lot",
+ "people like cricket"
+]
+🔹 Fit:
+bow.fit(documents)
+
+👉 Vocabulary:
+
+['again', 'and', 'cricket', 'like', 'lot', 'movie', 'people', 'watch']
+🔹 Transform:
+bow.transform(documents).toarray()
+
+👉 Output:
+
+[
+ [1,1,0,0,0,2,1,2],
+ [0,1,2,0,0,0,1,2],
+ [0,1,0,2,1,2,1,0],
+ [0,0,1,1,0,0,1,0]
+]
+🔹 7. New sentence
+document = ["lion is the king of jungle"]
+bow.transform(document)
+
+👉 Output:
+
+[[0 0 0 0 0 0 0 0]]
+❓ Why all zeros?
+
+👉 Because words like:
+
+lion
+king
+jungle
+
+❌ NOT in vocabulary
+
+🧠 Important Concept:
+
+👉 Model only understands known words
+
+🔹 8. How to fix unknown words?
+
+Use:
+
+CountVectorizer(stop_words='english')
+
+or train with more data
+
+🔹 9. Simple Summary
+
+👉 BOW:
+
+Convert text → numbers
+Count word frequency
+Ignore meaning
+🗣 English correction:
+
+You wrote:
+
+please ex[plain i m begginer
+
+Better:
+👉 "Please explain, I am a beginner."
+
+🚀 Next (VERY IMPORTANT for you):
+
+I suggest learning:
+
+TF-IDF (improves BOW)
+N-grams
+Difference:
+BOW vs OneHotEncoder
+
+👉 I can explain in very simple interview style
+
+Just tell me 👍
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------
+
+Day 6 
+5-April
+
+summary 
+OHE- 0&1 cheking present of data 
+BOW- Count based mechanism or frequency based
+TF-IDF - checking count and importance of the words
+
+
+
+------------------------------------------------------------------------
+
+
+Live Advance NLP Generative Ai  Bootcamp
+
+
+ Day 4rth Dec  Text Encoding techniques
+
+ 
+ 1.OHE
+ 2.BOW
+ 3.TF-IDF
+ 4.N-grams
+ 5.Word2Vec
