@@ -3789,3 +3789,192 @@ Repeat slowly:
 
 👉 “Encoder self-attention sees all tokens.”
 👉 “Decoder self-attention uses masking.”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+what is olama if interviewr asks
+
+answer
+
+Your English correction 😊
+
+You wrote:
+
+“what is olama if interviewr asks”
+
+Better:
+
+“What is Ollama if an interviewer asks?”
+
+Or more naturally:
+
+“How do I explain Ollama in an interview?”
+
+Also:
+
+olama ❌ → Ollama ✅
+interviewr ❌ → interviewer ✅
+
+If an interviewer asks about Ollama, you can answer simply like this:
+
+Ollama is a tool used to run large language models (LLMs) locally on a computer. It allows developers to download, manage, and interact with models like Llama, Mistral, and Phi using simple commands or APIs.
+
+It is mainly used for:
+
+running AI models offline
+local AI development
+privacy-focused applications
+testing and experimentation with LLMs
+
+Ollama also provides an API interface, so developers can integrate local AI models into Python applications, chatbots, and Gen AI projects.
+
+Simple Interview Version (Easy English)
+
+You can say:
+
+Ollama is a platform that helps us run AI language models locally on our computer. It simplifies downloading and using models like Llama and Mistral. Developers use it for building and testing Gen AI applications without depending completely on cloud APIs.
+
+If Interviewer Asks “Why Use Ollama?”
+
+You can say:
+
+We use Ollama because it is simple, lightweight, and useful for local LLM development. It gives better privacy, offline access, lower API cost, and easy integration with Python applications using APIs.
+
+Important Keywords for Interview
+
+Try remembering these words:
+
+Local LLMs
+Inference
+Model Runner
+Offline AI
+API Integration
+Privacy
+Local Development
+
+These make your answer sound professional.
+
+Real Understanding
+
+Technically:
+
+Ollama is an LLM inference and management tool.
+
+Meaning:
+
+it downloads models
+loads them into memory
+runs inference
+returns generated text
+Very Short 1-Line Answer
+
+If interviewer asks quickly:
+
+Ollama is a tool for running and managing LLMs locally.
+Example Interview Question & Answer
+Q:
+
+“What have you used Ollama for?”
+
+A:
+
+I used Ollama to run local LLMs like Llama 3.1 on my system and connected them with Python applications for experimentation and Gen AI learning projects.
+
+One More English Tip 😊
+
+Instead of:
+
+“if interviewer asks”
+
+More natural:
+
+“if an interviewer asks me”
+
+Example:
+
+“What should I say if an interviewer asks about Ollama?”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fine Tuning Chapter
+
+checkout 
+https://triton-lang.org/main/index.html
+
+https://github.com/VikParuchuri/triton_tutorial
+
+https://github.com/dao-ailab/flash-attention
+
+
+https://github.com/kst179/fused-attention
+
+
+For buying GPU
+Keggal -free GPU
+
+search runpod
+Paperspace gradient
+https://www.paperspace.com/gradient/enterprise
+search vast.ai
+
+
+
+Write Huggingface Token
+
+
+
+This class suggested 
+watch on Youtube Channel
+sunny savita langgraph
+sunny savita Agent
+-Agentic Ai with Langraph
+
+Sunny savita - LLM Fine-Tuning: 01 LLM Fine-Tuning From Scratch—Full Playlist Coming Your Way
+
+Sunny savita -RAG Pipeline from Scratch Using OLlama Python & Llama2 | | Llama2 Setup in local PC #llama2 #rag
+
+Suny savita - LLM Fine-Tuning 20: OpenAI(GPTs) Fine-Tuning Masterclass | Supervised FT | Token & Cost Analysis
+
+Suny savita - 
+LLM Fine-Tuning 24: Embedding & Embedding Fine-Tuning Full Guide | Train Your Own Embedding Model
+
+ 
+ not class part
+Krish -Complete Agentic AI Course In 10 Hours- Langchain, Langgraph, RAG,Vectorless RAG, Guardrails,Evals
+
+
