@@ -1,0 +1,1105 @@
+what is wordPiece and BPE
+answer
+
+WordPiece and BPE (Byte Pair Encoding) are tokenization algorithms used in NLP (Natural Language Processing) to split text into smaller units called tokens before feeding them into models like BERT, GPT, and other LLMs.
+
+Why do we need them?
+
+Instead of storing every possible word in a vocabulary, models break words into smaller pieces. This helps handle:
+
+New words
+Misspellings
+Rare words
+Smaller vocabulary size
+1. BPE (Byte Pair Encoding)
+
+BPE starts with individual characters and repeatedly merges the most frequent adjacent pairs.
+
+Example
+
+Training words:
+
+low
+lower
+lowest
+newest
+
+Initially:
+
+l o w
+l o w e r
+l o w e s t
+n e w e s t
+
+Suppose the most frequent pair is:
+
+e + s = es
+
+Then:
+
+l o w
+l o w e r
+l o w es t
+n e w es t
+
+Next, another frequent pair might be:
+
+es + t = est
+
+Eventually, common subwords like:
+
+low
+est
+new
+
+become tokens.
+
+Used by
+Early GPT models
+RoBERTa (variant of BPE)
+Many modern tokenizers
+2. WordPiece
+
+WordPiece is similar to BPE but chooses merges based on a probability score rather than just frequency.
+
+It tries to maximize the likelihood of the training data.
+
+Example
+
+Word:
+
+unhappiness
+
+May be tokenized as:
+
+un + ##happy + ##ness
+
+Here:
+
+un = token
+##happy means continuation of a word
+##ness means continuation of a word
+Used by
+BERT
+Many Transformer models developed by Google
+Key Difference
+Feature	BPE	WordPiece
+Merge Criterion	Most frequent pair	Best likelihood/probability score
+Simplicity	Simpler	More sophisticated
+Used In	GPT, RoBERTa	BERT
+Vocabulary Building	Frequency-based	Probability-based
+Example Tokenization
+
+Sentence:
+
+I am learning tokenization.
+
+Possible BPE tokens:
+
+I
+am
+learn
+ing
+token
+ization
+.
+
+Possible WordPiece tokens:
+
+I
+am
+learn
+##ing
+token
+##ization
+.
+Interview Answer (Short)
+
+BPE (Byte Pair Encoding) and WordPiece are subword tokenization techniques used in NLP. Both split words into smaller units to handle rare and unseen words efficiently. BPE merges the most frequent character pairs iteratively, while WordPiece selects merges based on probability and likelihood. BPE is commonly used in GPT-style models, whereas WordPiece is used in BERT. This reduces vocabulary size and improves handling of unknown words.
+
+English correction
+
+Your question:
+
+what is wordPiece and BPE
+
+More natural English:
+
+What are WordPiece and BPE?
+
+Because you are asking about two things, we use "are" instead of "is".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+refer given ipyb file
+
+from langchain_huggingface import ChatHuggingFace
+from langchain_huggingface import HuggingFaceEndpoint
+
+llm = HuggingFaceEndpoint(
+    repo_id="deepseek-ai/DeepSeek-R1",
+    task="text-generation",
+    max_new_tokens=512,
+    do_sample=False,
+    repetition_penalty=1.03,
+)
+chat_model = ChatHuggingFace(llm=llm)
+chat_model.invoke("hello how are you?")
+
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+
+template="""Question: {question}
+give me a answer in detail manner and in step by step manner"""
+
+prompt=PromptTemplate(template=template,input_variables=["question"])
+
+llm_chain = (
+        {"question": RunnablePassthrough()}
+        | prompt
+        | chat_model
+        | StrOutputParser()
+    )
+
+question="who is a first president of INDIA?"
+
+llm_chain.invoke({"question":question})
+
+
+
+
+
+
+
+
+
+
+in above code 
+this part explains 
+
+
+llm_chain = (
+        {"question": RunnablePassthrough()}
+        | prompt
+        | chat_model
+        | StrOutputParser()
+    )
+
+
+    
+
+This is the heart of LangChain, so it's normal to find it confusing initially.
+
+Let's ignore the fancy syntax and understand what happens step by step.
+
+You wrote:
+llm_chain = (
+    {"question": RunnablePassthrough()}
+    | prompt
+    | chat_model
+    | StrOutputParser()
+)
+Think of | as a pipeline.
+
+Just like:
+
+Water Pipe
+Tank → Pipe → Pipe → Tap
+
+LangChain:
+Input
+  ↓
+Prompt
+  ↓
+LLM
+  ↓
+Parser
+  ↓
+Output
+
+Step 1: User Input
+
+When you run:
+
+llm_chain.invoke("What is Python?")
+
+the input is:
+
+"What is Python?"
+Step 2: RunnablePassthrough()
+
+This part:
+
+{"question": RunnablePassthrough()}
+
+creates a dictionary.
+
+Input:
+
+"What is Python?"
+
+Output:
+
+{
+    "question": "What is Python?"
+}
+
+Why?
+
+Because PromptTemplate expects a variable called:
+
+{question}
+
+So LangChain creates:
+
+{
+    "question": value
+}
+Visualize
+
+Before:
+
+"What is Python?"
+
+After RunnablePassthrough:
+
+{
+    "question": "What is Python?"
+}
+Step 3: PromptTemplate
+
+Now this goes into:
+
+| prompt
+
+Remember your template:
+
+template = """
+Question: {question}
+
+give me answer in detail
+"""
+
+LangChain replaces:
+
+{question}
+
+with
+
+"What is Python?"
+
+Result:
+
+Question: What is Python?
+
+give me answer in detail
+Visualize
+
+Input:
+
+{
+    "question": "What is Python?"
+}
+
+Output:
+
+Question: What is Python?
+
+give me answer in detail
+Step 4: Chat Model
+
+Now:
+
+| chat_model
+
+takes that prompt and sends it to DeepSeek.
+
+Input:
+
+Question: What is Python?
+
+give me answer in detail
+
+Model processes it.
+
+Output:
+
+AIMessage(
+   content="Python is a programming language..."
+)
+
+Notice:
+
+AIMessage(...)
+
+not a string yet.
+
+Step 5: StrOutputParser
+
+Now:
+
+| StrOutputParser()
+
+takes:
+
+AIMessage(
+   content="Python is a programming language..."
+)
+
+and extracts only:
+
+"Python is a programming language..."
+
+Plain text.
+
+Complete Flow
+
+Suppose you run:
+
+llm_chain.invoke("What is Python?")
+Step 1
+"What is Python?"
+
+↓
+
+Step 2
+{
+   "question":"What is Python?"
+}
+
+↓
+
+Step 3
+Question: What is Python?
+
+give me answer in detail
+
+↓
+
+Step 4
+AIMessage(
+ content="Python is a programming language..."
+)
+
+↓
+
+Step 5
+"Python is a programming language..."
+
+Final output.
+
+Why use |?
+
+Without LCEL:
+
+input_data = {"question":"What is Python?"}
+
+formatted_prompt = prompt.invoke(input_data)
+
+response = chat_model.invoke(formatted_prompt)
+
+result = StrOutputParser().invoke(response)
+
+Many lines.
+
+With LCEL:
+
+chain = prompt | chat_model | StrOutputParser()
+
+Cleaner and easier.
+
+One Small Issue in Your Code
+
+You wrote:
+
+llm_chain.invoke({"question":question})
+
+If you're already passing a dictionary, you don't need:
+
+{"question": RunnablePassthrough()}
+
+A simpler version is:
+
+llm_chain = (
+    prompt
+    | chat_model
+    | StrOutputParser()
+)
+
+llm_chain.invoke({"question": question})
+
+This is easier for beginners.
+
+Interview Question
+
+Q: Explain this chain.
+
+prompt | chat_model | StrOutputParser()
+
+Answer:
+
+The PromptTemplate formats the user input into a prompt. The chat model sends the prompt to the LLM and generates a response. StrOutputParser converts the model output into a plain string. The pipe operator (|) connects these components into a sequential workflow.
+
+English correction
+
+Your sentence:
+
+this part too not getting
+
+More natural English:
+
+I am not understanding this part either.
+
+or
+
+I didn't understand this part either.
+
+The second sentence is the most natural in conversation. 😊
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Question:
+prompt=PromptTemplate(template=template,input_variables=["question"]) i am not getting this part
+
+Answer:
+
+This is one of the most important concepts in LangChain. Let's break it down very slowly.
+
+You have:
+
+prompt = PromptTemplate(
+    template=template,
+    input_variables=["question"]
+)
+Step 1: Look at your template
+
+Earlier you wrote:
+
+template = """
+Question: {question}
+give me a answer in detail manner and in step by step manner
+"""
+
+Notice this part:
+
+{question}
+
+This is a placeholder.
+
+Think of it like a blank space:
+
+Question: ________
+give me answer in detail manner
+Step 2: What does input_variables=["question"] mean?
+
+You are telling LangChain:
+
+"My template contains a variable named question."
+
+input_variables=["question"]
+
+means:
+
+Template expects:
+question
+Example
+
+Suppose:
+
+question = "What is Python?"
+
+LangChain replaces:
+
+{question}
+
+with
+
+What is Python?
+
+Final prompt becomes:
+
+Question: What is Python?
+
+give me a answer in detail manner and in step by step manner
+
+This is what gets sent to the LLM.
+
+Visual Flow
+Before Replacement
+Question: {question}
+
+give me answer in detail manner
+User Input
+{"question": "What is Python?"}
+After Replacement
+Question: What is Python?
+
+give me answer in detail manner
+Sent to DeepSeek
+Question: What is Python?
+
+give me answer in detail manner
+Why do we need PromptTemplate?
+
+Without PromptTemplate:
+
+question = "What is Python?"
+
+prompt = f"""
+Question: {question}
+give me answer in detail manner
+"""
+
+This works.
+
+But imagine 1,000 users asking questions.
+
+PromptTemplate automatically fills in the values.
+
+Real Interview Question
+What is PromptTemplate?
+
+Answer:
+
+PromptTemplate is a LangChain component that creates dynamic prompts by replacing placeholders with actual values at runtime.
+
+Example:
+
+template = "What is {topic}?"
+
+Input:
+
+{"topic":"Python"}
+
+Output:
+
+What is Python?
+Let's Try Another Example
+template = """
+My name is {name}
+I work as a {job}
+"""
+prompt = PromptTemplate(
+    template=template,
+    input_variables=["name","job"]
+)
+
+Input:
+
+{
+    "name":"Shraddha",
+    "job":"Software Engineer"
+}
+
+Output:
+
+My name is Shraddha
+I work as a Software Engineer
+Why ["question"] and not "question"?
+
+Because a template can have multiple variables.
+
+Example:
+
+template = """
+Question: {question}
+
+Language: {language}
+"""
+
+Then:
+
+input_variables=["question","language"]
+
+Two variables are expected.
+
+In Your Chain
+
+When you run:
+
+llm_chain.invoke(
+    {"question":"Who is the first President of India?"}
+)
+
+LangChain does:
+
+Step 1
+
+Takes:
+
+{"question":"Who is the first President of India?"}
+Step 2
+
+Finds:
+
+{question}
+
+inside the template.
+
+Step 3
+
+Replaces it.
+
+Result:
+
+Question: Who is the first President of India?
+
+give me a answer in detail manner and in step by step manner
+Step 4
+
+Sends to DeepSeek.
+
+English correction
+
+Your sentence:
+
+i am not getting this part
+
+A more natural way to say it:
+
+I am not understanding this part.
+
+or
+
+I didn't understand this part.
+
+The second sentence is the most common in interviews and classrooms:
+
+I didn't understand this part. Could you explain it again? 😊
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q.what question can be ask on this concept from interview perspective
+Answer:
+
+
+1. LangChain Basics
+Q1. What is LangChain?
+
+Answer:
+LangChain is a framework that helps developers build LLM applications by connecting prompts, models, memory, tools, vector databases, and output parsers into a workflow called a chain.
+
+Q2. What is a Chain in LangChain?
+
+Answer:
+
+A chain is a sequence of steps where the output of one component becomes the input of the next.
+
+Example:
+
+User Query
+    ↓
+PromptTemplate
+    ↓
+LLM
+    ↓
+Output Parser
+    ↓
+Response
+Q3. What is LCEL?
+
+Answer:
+
+LCEL (LangChain Expression Language) is a syntax that uses the pipe operator (|) to connect components.
+
+Example:
+
+chain = prompt | llm | parser
+2. Hugging Face Endpoint
+Q4. What is HuggingFaceEndpoint?
+
+Answer:
+
+HuggingFaceEndpoint is a LangChain wrapper used to access models hosted on Hugging Face through APIs without downloading them locally.
+
+Q5. Why use Hugging Face Endpoint instead of downloading the model?
+
+Answer:
+
+Benefits:
+
+No GPU required
+Less memory usage
+Faster setup
+Easy model switching
+Q6. What is repo_id?
+repo_id="deepseek-ai/DeepSeek-R1"
+
+Answer:
+
+repo_id uniquely identifies a model repository on Hugging Face.
+
+Format:
+
+owner/model-name
+
+Example:
+
+deepseek-ai/DeepSeek-R1
+3. Model Parameters
+Q7. What is max_new_tokens?
+
+Answer:
+
+It controls the maximum number of tokens the model can generate in the response.
+
+Example:
+
+max_new_tokens=512
+Q8. Difference between max_tokens and max_new_tokens?
+
+Answer:
+
+max_tokens → total tokens (input + output)
+max_new_tokens → output tokens only
+Q9. What does do_sample=False mean?
+
+Answer:
+
+It disables randomness.
+
+The model chooses the most probable next token every time.
+
+Useful for:
+
+QA systems
+Chatbots
+Deterministic outputs
+Q10. When would you use do_sample=True?
+
+Answer:
+
+For creative tasks such as:
+
+Story generation
+Poetry
+Marketing content
+Q11. What is repetition penalty?
+
+Answer:
+
+It reduces repeated words or phrases in generated text.
+
+Example:
+
+Without penalty:
+
+AI is great AI is great AI is great
+4. Chat Models
+Q12. Why use ChatHuggingFace?
+
+Answer:
+
+It converts a regular Hugging Face model into a chat-style model compatible with LangChain chat interfaces.
+
+Q13. Difference between LLM and Chat Model?
+
+Answer:
+
+LLM	Chat Model
+Plain text input	Message-based input
+Single prompt	Conversation
+No roles	Uses roles
+
+Example:
+
+llm.invoke("Hello")
+
+vs
+
+chat.invoke([
+    {"role":"user","content":"Hello"}
+])
+5. Prompt Engineering
+Q14. What is PromptTemplate?
+
+Answer:
+
+PromptTemplate creates dynamic prompts using variables.
+
+Example:
+
+template = "Question: {question}"
+Q15. Why use PromptTemplate instead of hardcoding prompts?
+
+Answer:
+
+Because the same template can be reused for multiple user inputs.
+
+Q16. What are input variables?
+input_variables=["question"]
+
+Answer:
+
+Variables that will be replaced dynamically inside the prompt.
+
+6. RunnablePassthrough
+Q17. What is RunnablePassthrough?
+
+Answer:
+
+It passes the input unchanged to the next component.
+
+Example:
+
+"India"
+
+becomes
+
+{"question":"India"}
+Q18. Why is RunnablePassthrough used?
+
+Answer:
+
+To map user input to the variable expected by the prompt.
+
+7. Output Parser
+Q19. What is StrOutputParser?
+
+Answer:
+
+It converts model output into a plain string.
+
+Without parser:
+
+AIMessage(content="Hello")
+
+With parser:
+
+"Hello"
+Q20. Why do we need Output Parsers?
+
+Answer:
+
+To convert raw model responses into formats usable by applications.
+
+Examples:
+
+String
+JSON
+List
+Structured objects
+8. Practical Questions
+Q21. Explain the flow of your code.
+
+Answer:
+
+User Question
+      ↓
+RunnablePassthrough
+      ↓
+PromptTemplate
+      ↓
+DeepSeek Model
+      ↓
+StrOutputParser
+      ↓
+Final Answer
+Q22. What happens when invoke() is called?
+
+Answer:
+
+invoke() executes the chain step by step and returns the final result.
+
+Q23. What is the difference between invoke(), batch(), and stream()?
+
+Answer:
+
+Method	Purpose
+invoke()	Single request
+batch()	Multiple requests
+stream()	Token-by-token response
+Q24. How would you make this chatbot remember previous conversations?
+
+Answer:
+
+Using memory components such as conversation memory or chat history.
+
+Q25. How would you improve this application?
+
+Answer:
+
+Add memory
+Add RAG
+Add vector database
+Add structured output
+Add streaming
+Add tools/functions
+Very Common Interview Question
+
+Explain your LangChain code from start to end.
+
+Answer:
+
+First, I connect to the DeepSeek model using HuggingFaceEndpoint. Then I wrap it with ChatHuggingFace to create a chat model. I create a PromptTemplate with a dynamic question variable. RunnablePassthrough passes the user question to the template. The formatted prompt is sent to the model, and StrOutputParser converts the model response into plain text. Finally, the chain is executed using invoke().
+
+English correction
+
+Your sentence:
+
+what question can be ask on this concept from interview perspective
+
+More natural English:
+
+What interview questions can be asked on this concept?
+
+or
+
+What interview questions can be asked from this topic?
+
+can be ask → can be asked
+from interview perspective → from an interview perspective or in interviews.
+
+
+
+
+
+
+
+
+
+Interview Questions
+Q1. What is load_dataset()?
+
+Answer:
+
+load_dataset() is a Hugging Face Datasets function used to download, cache, and load datasets into Python.
+
+Q2. What is a dataset split?
+
+Answer:
+
+A split is a subset of a dataset used for a specific purpose:
+
+Train
+Validation
+Test
+Q3. Why do we need training data?
+
+Answer:
+
+Training data helps the model learn patterns, relationships, and language structure.
+
+Q4. What is WikiText?
+
+Answer:
+
+WikiText is a language-modeling dataset derived from Wikipedia articles and is commonly used to train and evaluate NLP models.
+
+Q5. How can you see the first record?
+pretrain_dataset[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Important Interview Question
+Q: Difference between Dataset.from_dict() and push_to_hub()?
+
+Answer:
+
+Dataset.from_dict() creates a dataset in memory from Python dictionaries.
+push_to_hub() uploads the dataset to Hugging Face Hub so others (or you) can load it later.
+
+Example:
+
+dataset = Dataset.from_dict(data)
+
+dataset.push_to_hub(
+    "username/dataset-name"
+)
+
+
+
+
+
+from huggingface_hub import notebook_login
+
+notebook_login()
+import os
+from google.colab import userdata
+os.environ["HF_TOKEN"] = userdata.get("HF_TOKEN_WRITE")
+from datasets import Dataset
+
+data = {
+    "instruction": [
+        "Translate English to Hindi",
+        "Summarize the text",
+        "Explain Machine Learning"
+    ],
+    "input": [
+        "I love India",
+        "Artificial Intelligence is transforming industries.",
+        ""
+    ],
+    "output": [
+        "मुझे भारत पसंद है",
+        "AI industries ko transform kar raha hai.",
+        "Machine Learning is a subset of AI."
+    ]
+}
+
+dataset = Dataset.from_dict(data)
+
+dataset.push_to_hub(
+    "shraddha-chaudhari-ai/my-first-dataset",
+    private=True
+)

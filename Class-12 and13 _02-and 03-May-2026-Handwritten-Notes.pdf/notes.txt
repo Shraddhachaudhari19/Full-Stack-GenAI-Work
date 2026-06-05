@@ -3978,3 +3978,13 @@ LLM Fine-Tuning 24: Embedding & Embedding Fine-Tuning Full Guide | Train Your Ow
 Krish -Complete Agentic AI Course In 10 Hours- Langchain, Langgraph, RAG,Vectorless RAG, Guardrails,Evals
 
 
+
+---------------------------------------------------------
+on 30th may 2026
+
+see BPE reasearch Paper
+
+
+Openai token counter 
+
+Bert Research paper
