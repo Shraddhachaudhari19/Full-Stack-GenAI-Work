@@ -1,0 +1,1256 @@
+# # ============================================================
+# # 5. Extract text from PDF
+# # ============================================================
+def extract_pdf_pages(pdf_path: str) -> List[Dict[str, Any]]:
+    # Extract page-level text from a PDF.
+    pages = []
+    with fitz.open(pdf_path) as doc:
+        for page_index, page in enumerate(doc, start=1):
+            text = page.get_text("text")
+            text = text.strip() if text else ""
+            if text:
+                pages.append({
+                    "page": page_index,
+                    "text": text,
+                    "char_count": len(text),
+                })
+    return pages
+
+
+
+
+
+pdf_pages = extract_pdf_pages(config.pdf_path)
+
+
+
+print(f"Total pages with extracted text: {len(pdf_pages)}")
+print("Page-level character counts:")
+for item in pdf_pages:
+    print(f"Page {item['page']}: {item['char_count']} characters")
+
+
+
+
+
+
+
+
+
+
+
+
+
+This is a very common beginner confusion. Let's slow down and see exactly what values are inside pdf_pages.
+
+Step 1: Suppose your PDF has 3 pages
+
+After this line:
+
+pdf_pages = extract_pdf_pages(config.pdf_path)
+
+Imagine pdf_pages becomes:
+
+pdf_pages = [
+    {
+        "page": 1,
+        "text": "Metformin is used for diabetes...",
+        "char_count": 1200
+    },
+    {
+        "page": 2,
+        "text": "Lipid therapy reduces...",
+        "char_count": 980
+    },
+    {
+        "page": 3,
+        "text": "Clinical studies show...",
+        "char_count": 1500
+    }
+]
+
+Notice:
+
+pdf_pages is a list
+Each item in the list is a dictionary
+Step 2: What does for item in pdf_pages do?
+
+Python takes one element at a time from the list.
+
+First iteration
+item = {
+    "page": 1,
+    "text": "Metformin is used for diabetes...",
+    "char_count": 1200
+}
+
+Then Python executes:
+
+print(f"Page {item['page']}: {item['char_count']} characters")
+
+Substituting values:
+
+print(f"Page {1}: {1200} characters")
+
+Output:
+
+Page 1: 1200 characters
+Second iteration
+
+Now Python automatically moves to the next item:
+
+item = {
+    "page": 2,
+    "text": "Lipid therapy reduces...",
+    "char_count": 980
+}
+
+Then:
+
+print(f"Page {item['page']}: {item['char_count']} characters")
+
+becomes:
+
+print(f"Page {2}: {980} characters")
+
+Output:
+
+Page 2: 980 characters
+Third iteration
+item = {
+    "page": 3,
+    "text": "Clinical studies show...",
+    "char_count": 1500
+}
+
+Then:
+
+print(f"Page {3}: {1500} characters")
+
+Output:
+
+Page 3: 1500 characters
+Visual Representation
+
+Think of the list as boxes:
+
+pdf_pages
+│
+├── Item 1
+│     page = 1
+│     char_count = 1200
+│
+├── Item 2
+│     page = 2
+│     char_count = 980
+│
+└── Item 3
+      page = 3
+      char_count = 1500
+
+The loop:
+
+for item in pdf_pages:
+
+means:
+
+Take Item 1 → store in item
+Run print
+
+Take Item 2 → store in item
+Run print
+
+Take Item 3 → store in item
+Run print
+Debug Trick
+
+Add this:
+
+for item in pdf_pages:
+    print(item)
+
+You might see:
+
+{'page': 1, 'text': '...', 'char_count': 1200}
+{'page': 2, 'text': '...', 'char_count': 980}
+{'page': 3, 'text': '...', 'char_count': 1500}
+
+Now it becomes obvious that item is just one dictionary at a time.
+
+Another Simple Example
+students = [
+    {"name": "Ram", "age": 20},
+    {"name": "Shyam", "age": 22}
+]
+
+for student in students:
+    print(student["name"])
+
+Execution:
+
+First loop
+student = {"name": "Ram", "age": 20}
+
+Output:
+
+Ram
+Second loop
+student = {"name": "Shyam", "age": 22}
+
+Output:
+
+Shyam
+
+Exactly the same thing is happening with pdf_pages.
+
+English Correction
+
+You wrote:
+
+not getting this part execution putting values how is
+
+A more natural sentence would be:
+
+I am not understanding how values are being assigned during the execution of this loop.
+
+Or simply:
+
+How is item getting its values inside the loop?
+
+That's actually the key question here—and the answer is: Python automatically assigns each element of the list (pdf_pages) to item, one at a time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+question asked to chatgpt :
+but print(f"Page {item['page']}: {item['char_count']} characters") how is it wriiten item['page'] that is not getting w will it substitut item[1] : {item[9879]} this form not getting
+
+
+Answer:
+
+Ahh! I see exactly where you're confused.
+
+You're thinking:
+
+item['page']
+
+should maybe be something like:
+
+item[1]
+
+because you are thinking item is a list.
+
+But item is NOT a list. It is a dictionary.
+
+Let's create a dictionary
+item = {
+    "page": 1,
+    "text": "Hello",
+    "char_count": 9879
+}
+
+This dictionary contains:
+
+Key	Value
+"page"	1
+"text"	Hello
+"char_count"	9879
+
+Think of it like:
+
+item
+ ├── page       → 1
+ ├── text       → Hello
+ └── char_count → 9879
+How do we access values from a dictionary?
+
+Using the key.
+
+item["page"]
+
+Output:
+
+1
+item["char_count"]
+
+Output:
+
+9879
+Why not item[1] ?
+
+Because dictionaries do not use positions.
+
+Lists use positions.
+
+Example:
+
+List
+numbers = [10,20,30]
+
+Access by index:
+
+numbers[0]
+
+Output:
+
+10
+Dictionary
+person = {
+    "name":"Shraddha",
+    "age":25
+}
+
+Access by key:
+
+person["name"]
+
+Output:
+
+Shraddha
+
+NOT:
+
+person[0]
+
+❌ Error
+
+Now let's substitute manually
+
+Suppose:
+
+item = {
+    "page": 1,
+    "char_count": 9879
+}
+
+You write:
+
+print(f"Page {item['page']}: {item['char_count']} characters")
+
+Python evaluates:
+
+First part
+item['page']
+
+↓
+
+1
+Second part
+item['char_count']
+
+↓
+
+9879
+
+Now Python sees:
+
+print(f"Page {1}: {9879} characters")
+
+which becomes:
+
+Page 1: 9879 characters
+Another way to think
+
+Imagine a cupboard.
+
+item = {
+    "page": 1,
+    "char_count": 9879
+}
+
+is like:
+
+Drawer "page"
+    ↓
+    1
+
+Drawer "char_count"
+    ↓
+    9879
+
+When Python sees:
+
+item["page"]
+
+it opens drawer "page" and gets:
+
+1
+
+When Python sees:
+
+item["char_count"]
+
+it opens drawer "char_count" and gets:
+
+9879
+What does pages.append({...}) create?
+
+In your function:
+
+pages.append({
+    "page": page_index,
+    "text": text,
+    "char_count": len(text),
+})
+
+Suppose:
+
+page_index = 3
+len(text) = 4567
+
+Python creates:
+
+{
+    "page": 3,
+    "text": "...",
+    "char_count": 4567
+}
+
+and adds it to the list.
+
+So later:
+
+for item in pdf_pages:
+
+one iteration might be:
+
+item = {
+    "page": 3,
+    "text": "...",
+    "char_count": 4567
+}
+
+Therefore:
+
+item["page"]
+
+returns:
+
+3
+
+and
+
+item["char_count"]
+
+returns:
+
+4567
+
+Try running this tiny example:
+
+item = {
+    "page": 5,
+    "char_count": 1234
+}
+
+print(item["page"])
+print(item["char_count"])
+
+Can you tell me what output you expect? That will help me check whether the dictionary concept is clear before we move to the PDF example.
+
+
+
+
+
+
+
+
+
+
+
+
+
+✅ Exactly right!
+
+For this code:
+
+item = {
+    "page": 5,
+    "char_count": 1234
+}
+
+print(item["page"])
+print(item["char_count"])
+
+Output:
+
+5
+1234
+
+Now let's connect this to your PDF code.
+
+When Python executes:
+
+pages.append({
+    "page": page_index,
+    "text": text,
+    "char_count": len(text)
+})
+
+Suppose:
+
+page_index = 1
+len(text) = 1234
+
+Then Python stores:
+
+{
+    "page": 1,
+    "text": "...some text...",
+    "char_count": 1234
+}
+
+inside the pages list.
+
+After processing 3 pages, pdf_pages might look like:
+
+pdf_pages = [
+    {
+        "page": 1,
+        "char_count": 1234
+    },
+    {
+        "page": 2,
+        "char_count": 987
+    },
+    {
+        "page": 3,
+        "char_count": 4567
+    }
+]
+
+Now the loop starts:
+
+for item in pdf_pages:
+First iteration
+
+Python does:
+
+item = {
+    "page": 1,
+    "char_count": 1234
+}
+
+Then:
+
+item["page"]
+
+becomes:
+
+1
+
+and
+
+item["char_count"]
+
+becomes:
+
+1234
+
+So Python prints:
+
+Page 1: 1234 characters
+Second iteration
+
+Python automatically changes item to:
+
+item = {
+    "page": 2,
+    "char_count": 987
+}
+
+Now:
+
+item["page"]        → 2
+item["char_count"]  → 987
+
+Output:
+
+Page 2: 987 characters
+Third iteration
+item = {
+    "page": 3,
+    "char_count": 4567
+}
+
+Output:
+
+Page 3: 4567 characters
+A debugging trick
+
+Run this:
+
+for item in pdf_pages:
+    print("Current item =", item)
+    print(item["page"])
+    print(item["char_count"])
+    print("------")
+
+This will show you exactly what item contains during each loop iteration.
+
+The key concept
+
+You were thinking:
+
+item[1]
+
+But that's for a list:
+
+numbers = [10, 20, 30]
+
+numbers[1]   # 20
+
+Your item is a dictionary, so you use keys:
+
+item["page"]
+item["char_count"]
+
+instead of indexes.
+
+English Correction
+
+You wrote:
+
+5 1234
+
+A complete sentence would be:
+
+The output will be 5 and 1234.
+
+Or:
+
+It will print 5 and 1234.
+
+That's exactly correct. 👍
+
+One quick question: what do you think this will print?
+
+item = {
+    "page": 7,
+    "char_count": 500
+}
+
+print(f"Page {item['page']}: {item['char_count']} characters")
+
+Try to answer before looking at the result. This will confirm you've understood f-strings and dictionaries together.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Serach Dataset in huggingface
+
+1.Wikitext
+2.Wikipedia
+3.fineweb
+
+
+
+
+
+in that collab script
+after running all cells  specialy Cleaned_pdf_text()
+ here it explains about why we use 
+ sets (To remove duplicates or to store Unique values)
+
+
+
+ # ============================================================
+# 7. Split cleaned pages into paragraphs
+# ============================================================
+# Paragraph records are clean units for audit and inspection.
+# Later, tokenized text will be packed into fixed-size training blocks.
+
+def split_into_paragraph_records(cleaned_pages: List[Dict[str, Any]], min_chars: int = 80) -> List[Dict[str, Any]]:
+    records = []
+    seen = set()
+
+    for page in cleaned_pages:
+        paragraphs = re.split(r"\n\s*\n", page["text"])
+        for paragraph_index, paragraph in enumerate(paragraphs, start=1):
+            paragraph = paragraph.strip()
+            if len(paragraph) < min_chars:
+                continue
+
+            # Deduplicate exact repeated paragraphs.
+            normalized_key = re.sub(r"\s+", " ", paragraph.lower()).strip()
+            if normalized_key in seen:
+                continue
+            seen.add(normalized_key)
+            print(type(seen))
+
+            records.append({
+                "text": paragraph,
+                "source_page": page["page"],
+                "paragraph_id": paragraph_index,
+                "char_count": len(paragraph),
+            })
+
+    return records
+
+-------------------------------------------------- 
+Example
+
+a = {}
+b = set()
+
+print(type(a))
+print(type(b))
+
+<class 'dict'>
+<class 'set'>
+
+
+
+
+Why use it in your PDF code?
+
+Suppose your PDF has:
+
+Paragraph 1:
+Metformin reduces glucose.
+
+Paragraph 2:
+Metformin reduces glucose.
+
+Same paragraph appears twice.
+
+First Paragraph
+normalized_key = "metformin reduces glucose"
+
+Check:
+
+if normalized_key in seen
+
+At first:
+
+seen = set()
+
+Empty.
+
+So:
+
+False
+
+Not found.
+
+Then:
+
+seen.add(normalized_key)
+
+Now:
+
+seen = {
+   "metformin reduces glucose"
+}
+
+Store paragraph in records.
+
+Second Paragraph
+
+Again:
+
+normalized_key = "metformin reduces glucose"
+
+Check:
+
+if normalized_key in seen
+
+Now Python finds it!
+
+Because:
+
+seen = {
+   "metformin reduces glucose"
+}
+
+Output:
+
+True
+
+Therefore:
+
+continue
+
+runs.
+
+Meaning:
+
+Skip this paragraph.
+Don't store it again.
+Visual Flow
+
+First occurrence:
+
+Paragraph
+    ↓
+Not in set
+    ↓
+Add to set
+    ↓
+Keep paragraph
+
+Second occurrence:
+
+Same Paragraph
+      ↓
+Already in set
+      ↓
+True
+      ↓
+continue
+      ↓
+Skip paragraph
+
+
+Tiny Example
+
+seen = set()
+
+words = [
+    "apple",
+    "banana",
+    "apple",
+    "mango"
+]
+
+for word in words:
+
+    if word in seen:
+        print("Duplicate:", word)
+        continue
+
+    seen.add(word)
+    print("New:", word)
+
+Output:
+New: apple
+New: banana
+Duplicate: apple
+New: mango
+
+This is exactly what your PDF code is doing with paragraphs instead of words.
+
+
+
+
+
+
+-----------------------------------
+Now let's understand this part:
+
+seen = set()
+
+seen.add("metformin reduces glucose")
+
+After this line:
+
+seen.add("metformin reduces glucose")
+
+the set contains:
+
+seen = {
+    "metformin reduces glucose"
+}
+
+Think of it as a bag that stores unique items.
+
+Check if an item exists
+"metformin reduces glucose" in seen
+
+means:
+
+"Is 'metformin reduces glucose' present inside the set?"
+
+Python checks and finds it.
+
+Output:
+
+True
+Example
+seen = set()
+
+seen.add("apple")
+seen.add("banana")
+
+Now:
+
+print(seen)
+
+might show:
+
+{'apple', 'banana'}
+
+Check if :
+
+"apple" in seen
+
+Output:
+
+True
+
+because apple exists.
+
+Check if :
+
+"mango" in seen
+
+Output:
+
+False
+
+because mango does not exist.
+--------------------------------------------------------------
+
+
+GANs
+vs
+Vaiational Auto Encoder
+
+Latency is a measurement of delay in a system. Network latency is the amount of time it takes for data to travel from one point to another across a network
+
+
+
+
+
+
+
+split_dataset = text_dataset.train_test_split(
+    test_size=0.15,
+    seed=42
+)
+
+
+explained
+didnt get why it beeds seed = 42
+
+That's a very common confusion. Let's understand seed = 42 with a simple example.
+
+Imagine You Have 10 Paragraphs
+paragraphs = [1,2,3,4,5,6,7,8,9,10]
+
+Now you do:
+
+train_test_split(test_size=0.2)
+
+Python randomly chooses:
+
+8 paragraphs for train
+2 paragraphs for test
+
+Run 1 (without seed)
+
+Python might choose:
+
+Train: [1,2,3,4,5,6,7,8]
+Test:  [9,10]
+Run 2 (without seed)
+
+Python might choose:
+
+Train: [1,2,3,4,5,8,9,10]
+Test:  [6,7]
+
+Different split!
+
+Run 3 (without seed)
+
+Python might choose:
+
+Train: [1,3,4,5,6,7,8,10]
+Test:  [2,9]
+
+Again different.
+
+Why is this a problem?
+
+Suppose today your model gets:
+
+Validation Loss = 0.20
+
+Tomorrow:
+
+Validation Loss = 0.30
+
+You don't know:
+
+Did the model get worse?
+Or did the validation data change?
+Solution: Seed
+train_test_split(
+    test_size=0.2,
+    seed=42
+)
+
+The seed tells Python:
+
+"Start the random process from the same place every time."
+
+Run 1
+Train: [1,2,3,4,5,6,8,10]
+Test:  [7,9]
+Run 2
+Train: [1,2,3,4,5,6,8,10]
+Test:  [7,9]
+Run 3
+Train: [1,2,3,4,5,6,8,10]
+Test:  [7,9]
+
+Exactly the same every time.
+
+Why 42?
+
+There is nothing special about 42.
+
+You could use:
+
+seed = 1
+
+or
+
+seed = 100
+
+or
+
+seed = 999
+
+All are valid.
+
+For example:
+
+seed = 1
+
+might produce:
+
+Test: [2,5]
+
+while
+
+seed = 42
+
+might produce:
+
+Test: [7,9]
+Why Do Many People Use 42?
+
+It's a tradition in programming.
+
+It comes from the book:
+
+The Hitchhiker's Guide to the Galaxy
+
+where 42 is jokingly called:
+
+"The Answer to the Ultimate Question of Life, the Universe, and Everything."
+
+So programmers started using:
+
+seed = 42
+
+as a default example.
+
+Real-Life Analogy
+
+Imagine shuffling a deck of cards.
+
+Without seed:
+
+Shuffle 1 → Different order
+Shuffle 2 → Different order
+Shuffle 3 → Different order
+
+With:
+
+seed = 42
+
+it's like saying:
+
+"Use exactly the same shuffle pattern every time."
+
+So the card order is reproducible.
+
+In Your Fine-Tuning Code
+split_dataset = text_dataset.train_test_split(
+    test_size=0.15,
+    seed=42
+)
+
+means:
+
+15% validation data
+
+and
+
+always choose the same paragraphs
+for validation every run.
+
+This makes experiments fair and repeatable.
+
+Tiny Example
+from sklearn.model_selection import train_test_split
+
+data = [1,2,3,4,5,6,7,8,9,10]
+
+train, test = train_test_split(
+    data,
+    test_size=0.2,
+    random_state=42
+)
+
+Run it 100 times.
+
+You'll get the same train/test split every time because of the seed.
+
+English Correction
+
+You wrote:
+
+didnt get why it beeds seed = 42
+
+A natural version would be:
+
+I didn't understand why we need seed = 42.
+
+Corrections:
+
+didnt → didn't
+beeds → need
+Add I at the beginning for a complete sentence. 😊
+
+-----------------------------------------------------------------------------------------------
+
+
+tokenizer.pad_token  is  match the length with the biggest sentence 
+
+i am sunny  0
+i am sunny savita  0    0
+i am sunny savita  AI mentor
+
+LORA
+
+decomposition of matrix
+
+
+
+
+
+
+prompt
+Excellent ,keep this script inside same 
+
+now  two changes needed ,
+
+one is,i want is  i want uI for user  so he/she can select  any file from browse and upload it  and result can be display or he/she can download there 
+
+and second is  its  adding but not giving float or point value , i dont want round figure value  for both total value and its sub value  i.e. value which is to be added
+
+, example 1724126.93 + 1021997.36 + 1021997.36 + 0.00 + 0 + 0 + 0 + 0 + 0
+
+after adding it gives  3768122 but i want point value too value  3768121.65
+
+
+
+
+ContentMain.js:18 [ContentMain]
+
+ContentMain.js:18 [ContentService] document.readyState: loading
+
+(index):344  Uncaught SyntaxError: Invalid or unexpected token
+
+ContentMain.js:5 [ContentService.SetContentInitData] target: { TabId: 20662457, FrameId: 0}
+
+:5000/favicon.ico:1   Failed to load resource: the server responded with a status of 404 (NOT FOUND)
+
+[NEW] Explain Console errors by using Copilot in Edge: click
+
+         
+
+         to explain an error. 
+
+        Learn more
+
+        Don't show again
+
+ContentMain.js:18 [ContentMain]
+
+ContentMain.js:18 [ContentService] document.readyState: loading
+
+(index):344  Uncaught SyntaxError: Invalid or unexpected token
+
+ContentMain.js:5 [ContentService.SetContentInitData] target: { TabId: 20662457, FrameId: 0}
+
+:5000/favicon.ico:1   Failed to load resource: the server responded with a status of 404 (NOT FOUND)
+
+[NEW] Explain Console errors by using Copilot in Edge: click
+
+         
+
+         to explain an error. 
+
+        Learn more
+
+        Don't show again
+
+"C:\Users\Shraddha Chaudhari\AppData\Local\Programs\Python\Python312\python.exe" "C:\Users\Shraddha Chaudhari\Downloads\gst_inPython\gst_web_app.py" 
+
+====================================================
+
+  GST PDF Automation — Web Server Started
+
+====================================================
+
+  Local  : http://localhost:5000
+
+  Network: http://10.10.72.45:5000
+
+  Share the Network URL with anyone on the same
+
+  network — they just open it in a browser.
+
+====================================================
+
+ * Serving Flask app 'gst_web_app'
+
+ * Debug mode: off
+
+2026-06-12 10:54:58,079 [INFO] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+
+ * Running on all addresses (0.0.0.0)
+
+ * Running on http://127.0.0.1:5000
+
+ * Running on http://10.10.72.45:5000
+
+2026-06-12 10:54:58,079 [INFO] Press CTRL+C to quit
+
+
+
+
+
+
+
+It's not accepting multiple pdfs that Processs pdf button is not working  ,instead you can give option to select folder so user will upload the folder with multiple pdfs 
+
+and after successful building, i want this application  on production so keep accordingly and with good user experience you can use angular
