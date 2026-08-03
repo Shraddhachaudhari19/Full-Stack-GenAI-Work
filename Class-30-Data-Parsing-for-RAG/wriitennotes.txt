@@ -1,0 +1,20 @@
+Augmenting the input means adding moe context to the input 
+
+Input -> LLM -> Ouput
+
+Components of RAG --
+DATA Parsing (Document Ai) and Data Ingestion
+Retrieval
+Genration
+
+
+
+
+Open source - Pymupdf,Pdfplumber
+Cloud specific packages -PAID
+Azure Document Intelligence  (ADI)
+Aws Tessaract
+Google Document AI 
+
+
+Use Docling for parsing purpose

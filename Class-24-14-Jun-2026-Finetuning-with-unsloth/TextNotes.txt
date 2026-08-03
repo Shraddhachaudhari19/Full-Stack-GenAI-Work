@@ -1,0 +1,25 @@
+GRPO Group Relative Policy Optimization
+
+odd Ratio Preference Optimization
+
+DPO -Direct Preference Optimization
+
+
+
+1)Append  Base Model +Lora adapter (Runtime Memory) for Inferencing
+
+2)Merge   Base Model +Lora adapter (Permanent)
+older weight of the base model is going to be replaced by Lora adapter 
+
+
+
+
+
+
+
+
+
+
+
+
+

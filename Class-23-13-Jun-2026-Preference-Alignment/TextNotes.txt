@@ -1,0 +1,5 @@
+GRPO Group Relative Policy Optimization
+
+odd Ratio Preference Optimization
+
+DPO -Direct Preference Optimization
