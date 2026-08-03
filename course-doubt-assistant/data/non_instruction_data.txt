@@ -1,0 +1,163 @@
+Machine Learning Fundamentals
+
+Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. It focuses on developing algorithms and statistical models that can improve through experience. The field has become increasingly important in solving complex real-world problems where traditional programming approaches fall short.
+
+Supervised Learning Overview
+
+Supervised learning is a machine learning approach where the algorithm learns from labeled training data. Each training example consists of an input feature vector and a corresponding target output. The model learns to map inputs to outputs by minimizing the error between predicted and actual values. Common applications include email spam detection, credit approval, and medical diagnosis.
+
+Unsupervised Learning Concepts
+
+Unsupervised learning deals with unlabeled data where no target variable is provided. The algorithm must discover hidden patterns, structures, or representations in the data. Common unsupervised learning tasks include clustering similar data points together, dimensionality reduction, and anomaly detection. These techniques are valuable for exploratory data analysis.
+
+Neural Networks Architecture
+
+A neural network is a computational model inspired by biological neurons. It consists of interconnected layers of artificial neurons that process information. Each neuron receives inputs, applies weights and a bias term, and produces an output through an activation function. Neural networks can learn complex non-linear relationships in data through backpropagation training.
+
+Gradient Descent Optimization
+
+Gradient descent is an iterative optimization algorithm used to minimize a loss function. The algorithm computes the gradient of the loss with respect to model parameters and updates parameters in the direction opposite to the gradient. The learning rate controls the step size of each update. Variants include batch gradient descent, stochastic gradient descent, and mini-batch gradient descent.
+
+Backpropagation Algorithm
+
+Backpropagation is the fundamental algorithm for training neural networks. It computes gradients of the loss function with respect to network weights using the chain rule. The algorithm works in two phases: forward pass computes predictions, backward pass computes gradients. Backpropagation enables efficient training of deep neural networks with many layers.
+
+Activation Functions in Neural Networks
+
+Activation functions introduce non-linearity into neural networks, allowing them to learn complex patterns. Common activation functions include ReLU (Rectified Linear Unit), which outputs max(0, x), Sigmoid for binary classification outputs, and Tanh for outputs in the range [-1, 1]. The choice of activation function significantly impacts model performance and training dynamics.
+
+Convolutional Neural Networks
+
+Convolutional Neural Networks (CNNs) are specialized architectures for processing grid-like data such as images. They use convolutional layers with learnable filters to detect local patterns. Pooling layers reduce spatial dimensions while preserving important features. CNNs have achieved remarkable success in computer vision tasks like image classification, object detection, and semantic segmentation.
+
+Recurrent Neural Networks
+
+Recurrent Neural Networks (RNNs) are designed for sequence data where temporal dependencies are important. They maintain hidden states that capture information from previous time steps. Long Short-Term Memory (LSTM) networks address the vanishing gradient problem in standard RNNs. RNNs are widely used for natural language processing, time series analysis, and speech recognition.
+
+Transformer Architecture
+
+Transformers introduced the attention mechanism as the primary component for processing sequential data. Unlike RNNs, transformers process entire sequences in parallel, enabling faster training. The multi-head attention mechanism allows the model to focus on different aspects of the input. Transformers have become the foundation for state-of-the-art models in natural language processing.
+
+Attention Mechanism Explained
+
+The attention mechanism allows models to focus on relevant parts of the input. It computes attention weights as a function of query, key, and value vectors. Scaled dot-product attention normalizes the attention weights by dividing by the square root of key dimension. Attention mechanisms have been crucial in improving model performance across various domains.
+
+Cross-Validation Techniques
+
+Cross-validation is a statistical technique for evaluating model performance and reducing variance in performance estimates. K-fold cross-validation divides data into k subsets, training k models where each subset serves as test data once. Stratified cross-validation maintains class distribution in each fold for imbalanced datasets. Cross-validation helps detect overfitting and provides robust performance estimates.
+
+Overfitting and Regularization
+
+Overfitting occurs when a model learns training data too well, including noise, and performs poorly on new data. Regularization techniques penalize model complexity to prevent overfitting. L1 regularization (Lasso) adds absolute value penalties, encouraging sparse solutions. L2 regularization (Ridge) adds squared penalties, preferred for continuous features. Dropout randomly deactivates neurons during training as a form of regularization.
+
+Batch Normalization
+
+Batch normalization normalizes layer inputs to have zero mean and unit variance within each batch. It reduces internal covariate shift, allowing higher learning rates and faster convergence. Batch normalization acts as a regularizer, reducing overfitting. During inference, it uses population statistics computed during training rather than batch statistics.
+
+Feature Engineering and Selection
+
+Feature engineering is the process of creating relevant features from raw data to improve model performance. Techniques include scaling, transforming, and combining existing features. Feature selection identifies the most informative features for the learning task. Proper feature engineering often has greater impact on model performance than algorithm selection.
+
+Principal Component Analysis
+
+Principal Component Analysis (PCA) is a dimensionality reduction technique that transforms data to a new coordinate system. The first principal component has the highest variance, subsequent components have progressively lower variance while being orthogonal to previous ones. PCA is useful for visualization, noise reduction, and computational efficiency. The technique assumes linear relationships between features.
+
+K-Means Clustering
+
+K-Means is an unsupervised learning algorithm that partitions data into k clusters. It iteratively assigns points to the nearest centroid and updates centroids based on cluster means. The algorithm minimizes within-cluster sum of squared distances. K-Means is computationally efficient but sensitive to initialization and assumes spherical clusters.
+
+Hierarchical Clustering
+
+Hierarchical clustering builds a tree-like structure (dendrogram) of nested clusters. Agglomerative clustering starts with individual points and merges similar clusters iteratively. Divisive clustering starts with one cluster and splits recursively. The dendrogram provides insight into cluster relationships at different levels, offering more flexibility than K-Means.
+
+Support Vector Machines
+
+Support Vector Machines (SVMs) find the hyperplane that maximally separates different classes. The margin is the distance between the hyperplane and closest points. Support vectors are the critical data points that define the margin. Kernel tricks enable SVMs to handle non-linearly separable data by projecting to higher-dimensional spaces.
+
+Decision Trees
+
+Decision trees recursively partition the feature space using axis-aligned splits. Each split maximizes information gain or minimizes impurity at that node. Trees are interpretable and handle non-linear relationships naturally. Decision trees are prone to overfitting but can be regularized through pruning or limiting depth.
+
+Random Forests
+
+Random Forests combine multiple decision trees to reduce variance and improve generalization. Each tree is trained on a random bootstrap sample of data and random subset of features. Final predictions average predictions from all trees. Random Forests handle both regression and classification tasks effectively.
+
+Gradient Boosting Machines
+
+Gradient Boosting builds trees sequentially, each new tree correcting errors of previous trees. The algorithm computes gradients of the loss function to determine residuals. Each tree is fitted to the residuals, not original data. Gradient Boosting achieves state-of-the-art performance on many machine learning benchmarks.
+
+Ensemble Learning Methods
+
+Ensemble learning combines multiple models to achieve better performance than individual models. Bagging trains multiple models on bootstrap samples and averages predictions. Boosting sequentially trains models on weighted data, emphasizing misclassified examples. Stacking trains a meta-learner on predictions from base models.
+
+Imbalanced Data Handling
+
+Imbalanced datasets have unequal class distributions, causing models to be biased toward majority classes. Oversampling increases minority class samples through repetition or generation. Undersampling removes majority class samples. Cost-sensitive learning assigns higher misclassification costs to minority classes. Stratified sampling maintains class distribution in train-test splits.
+
+Hyperparameter Tuning
+
+Hyperparameters are configuration settings not learned from data. Grid search exhaustively evaluates all combinations of hyperparameters. Random search samples random combinations, often finding good solutions faster. Bayesian optimization models the objective function and focuses on promising regions. Hyperparameter tuning significantly impacts model performance.
+
+Evaluation Metrics
+
+Accuracy measures the proportion of correct predictions but is misleading for imbalanced datasets. Precision is the proportion of positive predictions that are correct. Recall (sensitivity) is the proportion of actual positives correctly identified. F1-score is the harmonic mean of precision and recall. For regression, MAE and RMSE measure prediction errors.
+
+ROC-AUC and Precision-Recall Curves
+
+The ROC (Receiver Operating Characteristic) curve plots true positive rate against false positive rate at different thresholds. AUC (Area Under Curve) summarizes ROC performance as a single number. Precision-Recall curves are more informative for imbalanced datasets. These curves help select optimal decision thresholds for different applications.
+
+Natural Language Processing Basics
+
+Natural Language Processing (NLP) enables computers to understand and generate human language. Tokenization splits text into words or subwords. Vectorization converts text into numerical representations. Common approaches include Bag-of-Words, TF-IDF, and word embeddings. NLP applications include sentiment analysis, machine translation, and question answering.
+
+Word Embeddings
+
+Word embeddings represent words as dense vectors in continuous space. Word2Vec learns embeddings through neural networks with Skip-gram or CBOW objectives. GloVe combines local context windows with global co-occurrence statistics. FastText uses character-level information for better handling of rare words. Embeddings capture semantic relationships where similar words have similar vectors.
+
+Sentiment Analysis
+
+Sentiment analysis determines whether text expresses positive, negative, or neutral sentiment. Lexicon-based approaches use predefined sentiment word dictionaries. Machine learning approaches train models on labeled text data. Deep learning models like LSTMs and Transformers achieve superior performance. Applications include social media monitoring, customer feedback analysis, and product reviews.
+
+Text Classification
+
+Text classification assigns documents to predefined categories. Naive Bayes assumes feature independence and works well for text. Logistic regression provides interpretable probabilistic predictions. Neural networks including CNNs and RNNs capture sequential patterns. Modern approaches use pre-trained language models for transfer learning.
+
+Named Entity Recognition
+
+Named Entity Recognition identifies and classifies named entities like people, organizations, locations. Sequence labeling treats NER as a token-level classification problem. BiLSTM-CRF combines bidirectional LSTMs with Conditional Random Fields. Pre-trained models like BERT have significantly improved NER performance. NER is essential for information extraction and knowledge base construction.
+
+Machine Translation
+
+Machine translation automatically translates text from source to target language. Phrase-based models translate sequences of words. Neural Machine Translation uses encoder-decoder architecture with attention. The encoder processes source language, the decoder generates target language. Modern systems use Transformers achieving human-quality translation.
+
+Transfer Learning
+
+Transfer learning leverages knowledge learned on one task to improve performance on another task. Pre-trained models are fine-tuned on target task data. Feature extraction uses pre-trained model representations without modifying weights. Transfer learning dramatically reduces data requirements and training time.
+
+Data Augmentation
+
+Data augmentation artificially expands training data through transformations. Image augmentation includes rotation, scaling, cropping, and color adjustments. Text augmentation includes back-translation, paraphrasing, and token replacement. Augmentation improves model generalization and robustness.
+
+Active Learning
+
+Active learning selects most informative samples for labeling to reduce annotation cost. Uncertainty sampling selects samples where model is most uncertain. Query-by-committee uses ensemble disagreement to identify informative samples. Active learning is valuable when labeling data is expensive.
+
+Meta-Learning
+
+Meta-learning enables models to learn how to learn from limited data. Few-shot learning trains on limited examples per class. Model-agnostic meta-learning (MAML) optimizes for fast adaptation. Meta-learning is valuable for scenarios with limited training data.
+
+Reinforcement Learning Basics
+
+Reinforcement learning trains agents to make sequential decisions to maximize cumulative reward. The agent observes state, takes action, receives reward and next state. Q-learning estimates the value of actions in states. Policy gradient methods optimize policy directly. RL applications include game playing, robotics, and resource allocation.
+
+Computer Vision Fundamentals
+
+Computer vision enables computers to understand visual information from images and videos. Image classification assigns images to categories. Object detection locates and classifies objects in images. Semantic segmentation assigns class labels to each pixel. Instance segmentation identifies and segments individual objects.
+
+Object Detection Models
+
+YOLO (You Only Look Once) predicts bounding boxes and class probabilities in single pass. R-CNN uses region proposals followed by classification. Faster R-CNN improves speed through region proposal networks. SSD (Single Shot MultiBox Detector) uses multi-scale feature maps. Modern detectors like EfficientDet balance accuracy and speed.
+
+Image Segmentation
+
+Semantic segmentation classifies each pixel into a category. Instance segmentation distinguishes between different objects of the same class. Panoptic segmentation combines semantic and instance segmentation. Fully Convolutional Networks enable end-to-end pixel-level predictions. U-Net architecture with skip connections is popular for segmentation.
